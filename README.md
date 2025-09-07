@@ -50,15 +50,15 @@ qiAgent 是一个基于 Python 的智能简历处理与岗位匹配助手。它�
 
 原项目演示：
 
-<video src="./video/原项目.mp4"></video>
+[<video src="./video/原项目.mp4"></video>](https://github.com/user-attachments/assets/c689e93d-2fa7-4d2b-bf02-b32b8902a331)
 
 mofa化演示：
 
-<video src="./video/mofa化.mp4"></video>
+[<video src="./video/mofa化.mp4"></video>](https://github.com/user-attachments/assets/fd8ba870-35bb-4b90-8d36-39d98b401cef)
 
 mcp化演示：
 
-<video src="./video/mcp化.mp4"></video>
+[<video src="./video/mcp化.mp4"></video>](https://github.com/user-attachments/assets/d20bd9f4-f9ab-4383-a4c5-ab0244520c2a)
 
 ## 快速开始
 
