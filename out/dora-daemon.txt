@@ -1,0 +1,27 @@
+2025-09-06T17:27:10.592802Z  INFO dora_daemon::coordinator: Connected to dora-coordinator at 127.0.0.1:53290
+2025-09-06T17:27:10.594058Z  INFO zenoh::net::runtime: Using ZID: d7f1be2881e30923f6d5fce40b6efb34
+2025-09-06T17:27:10.606459Z  INFO zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/125.221.201.167:5456
+2025-09-06T17:27:10.606504Z  INFO zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/[fe80::16f7:5449:672e:a2b4]:5456
+2025-09-06T17:27:10.606514Z  INFO zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/[fe80::8a8c:1544:fa5a:61ed]:5456
+2025-09-06T17:27:10.606521Z  INFO zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/[fe80::de0a:87ed:1991:ecf8]:5456
+2025-09-06T17:27:10.606615Z  INFO zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/172.16.1.57:5456
+2025-09-06T17:27:10.606626Z  INFO zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/192.168.137.1:5456
+2025-09-06T17:27:10.606628Z  INFO zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/192.168.237.1:5456
+2025-09-06T17:27:10.606631Z  INFO zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/192.168.247.1:5456
+2025-09-06T17:27:10.606633Z  INFO zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/10.202.228.121:5456
+2025-09-06T17:27:10.606635Z  INFO zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/172.23.240.1:5456
+2025-09-06T17:27:10.606964Z  INFO zenoh::net::runtime::orchestrator: zenohd listening scout messages on 224.0.0.224:7446
+2025-09-06T17:27:11.111729Z  WARN zenoh::net::runtime::orchestrator: Scouting delay elapsed before start conditions are met.
+2025-09-06T17:40:42.015311Z  INFO run_inner{self.daemon_id=DaemonId { machine_id: None, uuid: 26753efa-1243-461f-8b8e-46cdfe574832 }}: dora_daemon: received ctrlc signal -> stopping all dataflows
+2025-09-06T17:40:42.016020Z  INFO run_inner{self.daemon_id=DaemonId { machine_id: None, uuid: 26753efa-1243-461f-8b8e-46cdfe574832 }}: dora_daemon: received destroy command -> exiting
+2025-09-06T17:40:42.016338Z  INFO run_inner{self.daemon_id=DaemonId { machine_id: None, uuid: 26753efa-1243-461f-8b8e-46cdfe574832 }}: zenoh::api::session: close session zid=d7f1be2881e30923f6d5fce40b6efb34
+2025-09-06T17:40:42.032438Z  WARN dora_daemon::node_communication: failed to send event to daemon
+
+Location:
+    D:\a\dora\dora\binaries\daemon\src\node_communication\mod.rs:504:26
+2025-09-06T17:40:42.053023Z  WARN dora_daemon::node_communication: failed to send event to daemon
+
+Location:
+    D:\a\dora\dora\binaries\daemon\src\node_communication\mod.rs:504:26
+2025-09-06T17:40:42.374917Z ERROR dora_daemon: failed to report ctrl-c event to dora-coordinator
+2025-09-06T17:40:43.104038Z  WARN dora_daemon: received 3rd ctrlc signal -> aborting immediately

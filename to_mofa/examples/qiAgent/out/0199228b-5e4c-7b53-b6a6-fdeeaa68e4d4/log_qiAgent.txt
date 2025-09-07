@@ -1,0 +1,12 @@
+Error occurred: [Errno 2] No such file or directory: 'C:\\Users\\seven\\Desktop\\qiAgent\\to_mofa\\agent-hub\\qiAgent\\qiagent/output/resume.json'
+Traceback (most recent call last):
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 60, in run
+    text = work(file_path)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 32, in work
+    with open(f"{current_dir}/output/resume.json", "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\seven\\Desktop\\qiAgent\\to_mofa\\agent-hub\\qiAgent\\qiagent/output/resume.json'
+Traceback (most recent call last):
