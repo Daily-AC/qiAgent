@@ -1,0 +1,47 @@
+C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\qibot.py:288: SyntaxWarning: invalid escape sequence '\c'
+  def create_qiBot_from_config(config_path=f"..\config.yml", type="qiBot"):
+2025-09-07 14:57:21,182 - qiAgent - INFO - "qiAgent  receive  data : resume.pdf  "
+2025-09-07 14:57:21,183 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-09-07 14:57:21,184 - main - INFO - Start extracting resume information from PDF...
+2025-09-07 14:57:21,184 - mofa - ERROR - error extracting PDF text: [Errno 2] No such file or directory: '../../../examples/qiAgent/input/resume.pdf'
+Error occurred: [Errno 2] No such file or directory: '../../../examples/qiAgent/input/resume.pdf'
+Traceback (most recent call last):
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 68, in run
+    text = asyncio.run(work(file_path))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 29, in work
+    pdf_content = pdf_processor.extract_text_from_pdf(pdf_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\pdfprocessor.py", line 23, in extract_text_from_pdf
+    with open(pdf_path, 'rb') as file:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../../../examples/qiAgent/input/resume.pdf'
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Scripts\qiAgent.exe\__main__.py", line 10, in <module>
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 73, in main
+    text = asyncio.run(work(file_path))
+    ^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 67, in run
+    
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 147, in receive_parameter
+    input_data = self._receive_event_input(event=event, parameter_names=parameter_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 131, in _receive_event_input
+    def _receive_event_input(self, event, parameter_names:Union[str,dict]):
+
+KeyboardInterrupt

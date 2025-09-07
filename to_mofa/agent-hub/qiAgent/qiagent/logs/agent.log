@@ -1,0 +1,4 @@
+2025-09-07 15:02:05,397 - qiAgent - INFO - "qiAgent  receive  data : resume.pdf  "
+2025-09-07 15:04:11,639 - qiAgent - INFO - "text  output data : Job recommendation report has been saved to ../../../examples/qiAgent/output/result.pdf  type : <class 'str'>"
+2025-09-07 18:02:28,971 - qiAgent - INFO - "qiAgent  receive  data : resume.pdf  "
+2025-09-07 18:05:24,771 - qiAgent - INFO - "text  output data : Job recommendation report has been saved to ../../../examples/qiAgent/output/result.pdf  type : <class 'str'>"
