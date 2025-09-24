@@ -1,0 +1,28 @@
+Error occurred: Object of type coroutine is not JSON serializable
+Traceback (most recent call last):
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 55, in run
+    agent.send_output(agent_output_name='text', agent_result=text)
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 176, in send_output
+    pa.array([create_agent_output(
+              ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 26, in create_agent_output
+    return json.dumps({'step_name':agent_name, 'node_results':agent_result, 'dataflow_status':dataflow_status}, ensure_ascii=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type coroutine is not JSON serializable
+C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py:263: RuntimeWarning: coroutine 'work' was never awaited
+  traceback.print_exc()
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+Traceback (most recent call last):

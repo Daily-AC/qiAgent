@@ -1,0 +1,19 @@
+Error occurred: 'coroutine' object has no attribute 'choices'
+Traceback (most recent call last):
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 57, in run
+    text = work(file_path)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 24, in work
+    resume_json = resumeBot.process_query(pdf_content)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\qibot.py", line 134, in process_query
+    curr_content = response.choices[0].message.content
+                   ^^^^^^^^^^^^^^^^
+AttributeError: 'coroutine' object has no attribute 'choices'
+C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py:263: RuntimeWarning: coroutine 'AsyncCompletions.create' was never awaited
+  traceback.print_exc()
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main

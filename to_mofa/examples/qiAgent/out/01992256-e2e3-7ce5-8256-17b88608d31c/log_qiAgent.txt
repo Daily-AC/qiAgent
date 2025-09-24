@@ -1,0 +1,19 @@
+C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py:260: RuntimeWarning: coroutine 'run' was never awaited
+  func(*args, **kwargs)
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+Exception ignored in: <coroutine object run at 0x000002588B968200>
+Traceback (most recent call last):
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\warnings.py", line 555, in _warn_unawaited_coroutine
+    warn(msg, category=RuntimeWarning, stacklevel=2, source=coro)
+KeyboardInterrupt: 
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Scripts\qiAgent.exe\__main__.py", line 10, in <module>
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 61, in main
+    asyncio.run_coroutine_threadsafe(run(agent=agent), loop)
+                                     ^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 258, in wrapper
+    while True:
+          ^^^^
+KeyboardInterrupt
