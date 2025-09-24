@@ -28,6 +28,7 @@ qiAgent 是一个基于 Python 的智能简历处理与岗位匹配助手。它�
 ├── resume/                    # 存放简历 PDF
 ├── classified_data/           # 分类后的岗位数据
 ├── mcp_server/                # MCP 服务端
+├── asr/                       # 语音模块
 └── to_mofa/                   # mofa实现版本
 ```
 
@@ -106,7 +107,8 @@ uv run main.py
 ## 主要模块说明
 
 - `pdfprocessor.py`：负责 PDF 文本提取与 Markdown 转 PDF。
-- `qibot.py`：支持调用MCP Tools、多轮对话的agent，可实现简历解析与岗位匹配智能 Bot。（流式输出还在路上）
+- `qibot.py`：支持调用MCP Tools、多轮对话的agent，可实现简历解析与岗位匹配智能 Bot。
+- `asrbot.py`: AI模拟面试Bot。
 - `mcp_server/mcp_server.py`：stdio式的MCP Server，支持查看指定目录的文件列表及内容。
 - `classified_data/`：岗位分类数据，支持多种学历与经验组合。
 
