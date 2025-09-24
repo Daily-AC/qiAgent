@@ -1,0 +1,50 @@
+2025-09-07 14:31:09,711 - qiAgent - INFO - "qiAgent  receive  data : C:\\\\Users\\\\seven\\\\Desktop\\\\qiAgent\\\\resume\\\\resume.pdf  "
+2025-09-07 14:31:09,712 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-09-07 14:31:09,713 - main - INFO - Start converting the results to PDF...
+2025-09-07 14:31:09,775 - MARKDOWN - DEBUG - Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-09-07 14:31:09,777 - MARKDOWN - DEBUG - Successfully loaded extension "mdx_math.MathExtension".
+2025-09-07 14:31:12,478 - main - INFO - PDF result generated successfully! Please check C:/Users/seven/Desktop/qiAgent/to_mofa/agent-hub/qiAgent/output/result.pdf
+2025-09-07 14:31:12,482 - qiAgent - INFO - "text  output data : Job recommendation report has been saved to C:/Users/seven/Desktop/qiAgent/to_mofa/agent-hub/qiAgent/output/result.pdf  type : <class 'str'>"
+2025-09-07 14:32:11,828 - qiAgent - INFO - "qiAgent  receive  data : C:\\\\Users\\\\seven\\\\Desktop\\\\qiAgent\\\\resume\\\\resume.pdf  "
+2025-09-07 14:32:11,828 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-09-07 14:32:11,829 - main - INFO - Start converting the results to PDF...
+Error occurred: [Errno 2] No such file or directory: 'C:/Users/seven/Desktop/qiAgent/to_mofa/agent-hub/qiAgent/output/result.md'
+Traceback (most recent call last):
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 66, in run
+    text = asyncio.run(work(file_path))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 58, in work
+    pdf_processor.md_to_pdf(f"{output_dir}/result.md", f"{output_dir}/result.pdf")
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\pdfprocessor.py", line 53, in md_to_pdf
+    with open(input_md, 'r', encoding='utf-8') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:/Users/seven/Desktop/qiAgent/to_mofa/agent-hub/qiAgent/output/result.md'
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Scripts\qiAgent.exe\__main__.py", line 10, in <module>
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 71, in main
+    run(agent)
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 65, in run
+    file_path = agent.receive_parameter('file_path')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 147, in receive_parameter
+    input_data = self._receive_event_input(event=event, parameter_names=parameter_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 131, in _receive_event_input
+    def _receive_event_input(self, event, parameter_names:Union[str,dict]):
+
+KeyboardInterrupt

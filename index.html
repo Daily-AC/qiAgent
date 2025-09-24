@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qiBot - AI助手</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- 在<head>部分添加 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #818cf8;
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --muted-text: #64748b;
+            --border-color: #e2e8f0;
+            --sidebar-bg: #f1f5f9;
+            --input-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --muted-text: #94a3b8;
+            --border-color: #334155;
+            --sidebar-bg: #1e293b;
+            --input-bg: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 36px;
+            height: 36px;
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--muted-text);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .bot-selector {
+            margin-bottom: 20px;
+        }
+
+        .bot-selector select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .new-chat-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .new-chat-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .chat-history {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .history-title {
+            font-size: 14px;
+            color: var(--muted-text);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-item {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background-color 0.2s;
+        }
+
+        .chat-item:hover {
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+
+        .chat-item.active {
+            background-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .chat-item i {
+            color: var(--muted-text);
+        }
+
+        .chat-item-content {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .chat-item-title {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-item-preview {
+            font-size: 12px;
+            color: var(--muted-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .current-bot {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bot-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .chat-container {
+            flex-grow: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        .tool-call {
+            align-self: flex-start;
+            background-color: rgba(245, 158, 11, 0.2);
+            border: 1px solid var(--warning-color);
+            font-family: monospace;
+            font-size: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+
+        .input-area {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+        }
+
+        .message-input {
+            flex-grow: 1;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text-color);
+            resize: none;
+            min-height: 50px;
+            max-height: 150px;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .send-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+
+        .send-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .send-btn:disabled {
+            background-color: var(--muted-text);
+            cursor: not-allowed;
+        }
+
+        .tools-panel {
+            width: 300px;
+            background-color: var(--card-bg);
+            border-left: 1px solid var(--border-color);
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .tools-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tool-item {
+            background-color: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .tool-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        .tool-desc {
+            font-size: 14px;
+            color: var(--muted-text);
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--muted-text);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 1024px) {
+            .tools-panel {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                left: -280px;
+                z-index: 100;
+                height: 100%;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .sidebar-toggle {
+                display: block;
+                position: fixed;
+                top: 16px;
+                left: 16px;
+                z-index: 101;
+                background-color: var(--primary-color);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+        /* 添加消息容器的最大宽度限制 */
+        .message {
+            max-width: 80%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* 确保消息内容正确换行 */
+        .message-content {
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        /* 代码块样式 */
+        .message-content pre {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .message-content code {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .message-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 12px 0;
+            max-width: 100%;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .message-content th, .message-content td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+        }
+
+        .message-content th {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        /* 确保输入指示器可见 */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--muted-text);
+            margin-top: 8px;
+            padding: 12px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            max-width: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <!-- 移动端侧边栏切换按钮 -->
+    <button class="sidebar-toggle hidden" id="sidebar-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- 左侧边栏 -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo-area">
+            <div class="logo">
+                <i class="fas fa-robot fa-2x" style="color: var(--primary-color);"></i>
+                <h1>qiBot</h1>
+            </div>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="bot-selector">
+            <select id="bot-select">
+                <option value="qiBot">通用助手 (qiBot)</option>
+                <option value="resumeBot">简历分析 (resumeBot)</option>
+                <option value="matchingBot">智能匹配 (matchingBot)</option>
+            </select>
+        </div>
+
+        <button class="new-chat-btn" id="new-chat-btn">
+            <i class="fas fa-plus"></i>
+            新对话
+        </button>
+
+        <div class="chat-history">
+            <div class="history-title">
+                <span>聊天历史</span>
+                <button id="clear-history" title="清除历史">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            <div id="chat-history-list">
+                <!-- 聊天历史将通过JS动态添加 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 主聊天区域 -->
+    <div class="main-content">
+        <div class="chat-header">
+            <div class="current-bot">
+                <span>当前助手:</span>
+                <span class="bot-tag" id="current-bot-tag">qiBot</span>
+            </div>
+            <div class="tools-toggle">
+                <button id="tools-toggle">
+                    <i class="fas fa-tools"></i>
+                    工具面板
+                </button>
+            </div>
+        </div>
+
+        <div class="chat-container" id="chat-container">
+            <div class="message bot-message">
+                <div class="message-content">
+        您好！我是qiBot，您的AI助手。我可以使用各种工具来帮助您解决问题。请问今天我能为您做些什么？
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <textarea class="message-input" id="message-input" placeholder="输入您的消息..." rows="1"></textarea>
+            <button class="send-btn" id="send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 右侧工具面板 -->
+    <div class="tools-panel" id="tools-panel">
+        <div class="tools-header">
+            <i class="fas fa-tools" style="color: var(--primary-color);"></i>
+            <h2>可用工具</h2>
+        </div>
+        <div id="tools-list">
+            <div class="tool-item">
+                <div class="tool-name">文件读取</div>
+                <div class="tool-desc">读取指定路径的文件内容</div>
+            </div>
+            <div class="tool-item">
+                <div class="tool-name">文件搜索</div>
+                <div class="tool-desc">在指定目录中搜索文件</div>
+            </div>
+            <div class="tool-item">
+                <div class="tool-name">代码分析</div>
+                <div class="tool-desc">分析代码并提供建议</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM元素
+            const chatContainer = document.getElementById('chat-container');
+            const messageInput = document.getElementById('message-input');
+            const sendBtn = document.getElementById('send-btn');
+            const toolsList = document.getElementById('tools-list');
+            const themeToggle = document.getElementById('theme-toggle');
+            const botSelect = document.getElementById('bot-select');
+            const currentBotTag = document.getElementById('current-bot-tag');
+            const newChatBtn = document.getElementById('new-chat-btn');
+            const chatHistoryList = document.getElementById('chat-history-list');
+            const clearHistoryBtn = document.getElementById('clear-history');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const toolsPanel = document.getElementById('tools-panel');
+            const toolsToggle = document.getElementById('tools-toggle');
+            
+            // 状态变量
+            let currentChatId = null;
+            let isWaitingForResponse = false;
+            let currentTheme = localStorage.getItem('theme') || 'dark';
+            
+            // 初始化主题
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeIcon();
+            
+            // 初始化聊天历史
+            loadChatHistory();
+            
+            // 检测屏幕宽度，决定是否显示移动端侧边栏切换按钮
+            function checkScreenSize() {
+                if (window.innerWidth <= 768) {
+                    sidebarToggle.classList.remove('hidden');
+                    sidebar.classList.remove('active');
+                } else {
+                    sidebarToggle.classList.add('hidden');
+                    sidebar.classList.add('active');
+                }
+            }
+            
+            // 初始检测
+            checkScreenSize();
+            window.addEventListener('resize', checkScreenSize);
+            
+            // 主题切换
+            themeToggle.addEventListener('click', function() {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                localStorage.setItem('theme', currentTheme);
+                updateThemeIcon();
+            });
+            
+            function updateThemeIcon() {
+                themeToggle.innerHTML = currentTheme === 'dark' ? 
+                    '<i class="fas fa-sun"></i>' : 
+                    '<i class="fas fa-moon"></i>';
+            }
+            
+            // Bot选择
+            botSelect.addEventListener('change', function() {
+                const selectedBot = botSelect.value;
+                currentBotTag.textContent = selectedBot;
+                
+                // 如果当前有对话，可以提示用户切换bot会开始新对话
+                if (chatContainer.children.length > 1) { // 大于1是因为有初始欢迎消息
+                    if (confirm('切换助手将开始新对话，是否继续?')) {
+                        startNewChat();
+                    } else {
+                        // 恢复之前的选择
+                        botSelect.value = currentBotTag.textContent;
+                    }
+                }
+            });
+            
+            // 新对话按钮
+            newChatBtn.addEventListener('click', startNewChat);
+            
+            function startNewChat() {
+                currentChatId = 'chat-' + Date.now();
+                chatContainer.innerHTML = `
+                    <div class="message bot-message">
+                        <div class="message-content">
+            您好！我是${botSelect.value}，您的AI助手。我可以使用各种工具来帮助您解决问题。请问今天我能为您做些什么？
+                        </div>
+                    </div>
+                `;
+                
+                // 添加到历史记录
+                addToHistory(currentChatId, `与${botSelect.value}的新对话`);
+                
+                // 滚动到底部
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            // 清除历史记录
+            clearHistoryBtn.addEventListener('click', function() {
+                if (confirm('确定要清除所有聊天历史吗？此操作不可撤销。')) {
+                    localStorage.removeItem('chatHistory');
+                    chatHistoryList.innerHTML = '';
+                }
+            });
+            
+            // 侧边栏切换（移动端）
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+            
+            // 工具面板切换
+            toolsToggle.addEventListener('click', function() {
+                toolsPanel.classList.toggle('hidden');
+            });
+            
+            // 自动调整文本区域高度
+            messageInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            
+            // 加载聊天历史
+            function loadChatHistory() {
+                const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+                chatHistoryList.innerHTML = '';
+                
+                history.forEach(item => {
+                    const chatItem = document.createElement('div');
+                    chatItem.className = 'chat-item';
+                    chatItem.dataset.id = item.id;
+                    chatItem.innerHTML = `
+                        <i class="fas fa-comment"></i>
+                        <div class="chat-item-content">
+                            <div class="chat-item-title">${item.title}</div>
+                            <div class="chat-item-preview">${item.preview}</div>
+                        </div>
+                    `;
+                    
+                    chatItem.addEventListener('click', function() {
+                        loadChat(item.id);
+                    });
+                    
+                    chatHistoryList.appendChild(chatItem);
+                });
+            }
+            
+            // 添加到历史记录
+            function addToHistory(id, title, preview = '新对话') {
+                let history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+                
+                // 检查是否已存在
+                const existingIndex = history.findIndex(item => item.id === id);
+                
+                if (existingIndex >= 0) {
+                    // 更新现有记录
+                    history[existingIndex].title = title;
+                    history[existingIndex].preview = preview;
+                    history[existingIndex].timestamp = Date.now();
+                } else {
+                    // 添加新记录
+                    history.unshift({
+                        id: id,
+                        title: title,
+                        preview: preview,
+                        timestamp: Date.now(),
+                        bot: botSelect.value
+                    });
+                }
+                
+                // 保持最多20条记录
+                if (history.length > 20) {
+                    history = history.slice(0, 20);
+                }
+                
+                localStorage.setItem('chatHistory', JSON.stringify(history));
+                loadChatHistory();
+            }
+            
+            // 加载聊天
+            function loadChat(chatId) {
+                // 在实际应用中，这里会从服务器或本地存储加载完整的聊天记录
+                // 这里仅做演示
+                const chatData = JSON.parse(localStorage.getItem('chatData') || '{}');
+                
+                if (chatData[chatId]) {
+                    currentChatId = chatId;
+                    chatContainer.innerHTML = '';
+                    
+                    chatData[chatId].messages.forEach(msg => {
+                        const messageElement = document.createElement('div');
+                        messageElement.className = `message ${msg.role}-message`;
+                        
+                        const contentElement = document.createElement('div');
+                        contentElement.className = 'message-content';
+                        contentElement.innerHTML = marked.parse(msg.content);
+                        
+                        messageElement.appendChild(contentElement);
+                        chatContainer.appendChild(messageElement);
+                    });
+                    
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    // 更新当前bot选择
+                    const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+                    const chatItem = history.find(item => item.id === chatId);
+                    if (chatItem && chatItem.bot) {
+                        botSelect.value = chatItem.bot;
+                        currentBotTag.textContent = chatItem.bot;
+                    }
+                }
+            }
+            
+            // 发送消息函数
+            async function sendMessage() {
+                const message = messageInput.value.trim();
+                if (!message || isWaitingForResponse) return;
+                
+                // 禁用输入和发送按钮
+                messageInput.disabled = true;
+                sendBtn.disabled = true;
+                isWaitingForResponse = true;
+                
+                // 添加用户消息到聊天窗口
+                addMessage(message, 'user');
+                messageInput.value = '';
+                messageInput.style.height = 'auto';
+                
+                // 显示正在输入指示器
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'typing-indicator';
+                typingIndicator.innerHTML = `
+                    <span>${botSelect.value} 正在思考</span>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                `;
+                chatContainer.appendChild(typingIndicator);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                try {
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 
+                            message: message,
+                            bot_type: botSelect.value
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    // 处理流式响应
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    
+                    // 移除输入指示器
+                    chatContainer.removeChild(typingIndicator);
+                    
+                    // 创建消息容器
+                    const messageElement = document.createElement('div');
+                    messageElement.className = 'message bot-message';
+                    
+                    const contentElement = document.createElement('div');
+                    contentElement.className = 'message-content';
+                    messageElement.appendChild(contentElement);
+                    
+                    chatContainer.appendChild(messageElement);
+                    
+                    let accumulatedText = '';
+                    
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        
+                        // 解码并处理数据
+                        const chunk = decoder.decode(value, { stream: true });
+                        accumulatedText += chunk;
+                        
+                        // 使用Markdown渲染
+                        contentElement.innerHTML = marked.parse(accumulatedText);
+                        
+                        // 高亮代码块
+                        document.querySelectorAll('pre code').forEach((block) => {
+                            hljs.highlightElement(block);
+                        });
+                        
+                        // 滚动到底部
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }
+                    
+                    // 保存到聊天记录
+                    saveChatMessage('assistant', accumulatedText);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    chatContainer.removeChild(typingIndicator);
+                    addMessage('抱歉，发生了错误，请重试。', 'bot');
+                } finally {
+                    // 重新启用输入
+                    messageInput.disabled = false;
+                    sendBtn.disabled = false;
+                    isWaitingForResponse = false;
+                    messageInput.focus();
+                }
+            }
+            
+            // 添加消息到聊天窗口
+            function addMessage(text, sender) {
+                const messageElement = document.createElement('div');
+                messageElement.className = `message ${sender}-message`;
+                
+                const contentElement = document.createElement('div');
+                contentElement.className = 'message-content';
+                contentElement.innerHTML = marked.parse(text);
+                
+                messageElement.appendChild(contentElement);
+                chatContainer.appendChild(messageElement);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                // 高亮代码块
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+            
+            // 保存聊天消息到本地存储
+            function saveChatMessage(role, content) {
+                const chatData = JSON.parse(localStorage.getItem('chatData') || '{}');
+                
+                if (!chatData[currentChatId]) {
+                    chatData[currentChatId] = {
+                        messages: [],
+                        createdAt: Date.now()
+                    };
+                }
+                
+                chatData[currentChatId].messages.push({
+                    role: role,
+                    content: content,
+                    timestamp: Date.now()
+                });
+                
+                localStorage.setItem('chatData', JSON.stringify(chatData));
+            }
+            
+            // 发送按钮点击事件
+            sendBtn.addEventListener('click', sendMessage);
+            
+            // 按Enter发送消息，Shift+Enter换行
+            messageInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // 初始加载可用工具
+            fetch('/api/tools')
+                .then(response => response.json())
+                .then(tools => {
+                    toolsList.innerHTML = '';
+                    tools.forEach(tool => {
+                        const toolElement = document.createElement('div');
+                        toolElement.className = 'tool-item';
+                        toolElement.innerHTML = `
+                            <div class="tool-name">${tool.name}</div>
+                            <div class="tool-desc">${tool.description}</div>
+                        `;
+                        toolsList.appendChild(toolElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading tools:', error);
+                });
+        });
+    </script>
+</body>
+</html>

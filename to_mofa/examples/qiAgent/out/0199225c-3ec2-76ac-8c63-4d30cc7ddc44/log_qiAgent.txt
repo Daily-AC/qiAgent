@@ -1,0 +1,29 @@
+Error occurred: 'gbk' codec can't encode character '\u231b' in position 0: illegal multibyte sequence
+Traceback (most recent call last):
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 55, in run
+    text = work(file_path)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 14, in work
+    print("\u231b\ufe0f��ʼ��ȡ������Ϣ...")
+UnicodeEncodeError: 'gbk' codec can't encode character '\u231b' in position 0: illegal multibyte sequence
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Scripts\qiAgent.exe\__main__.py", line 10, in <module>
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 61, in main
+    agent = MofaAgent(agent_name='qiAgent')
+                                     ^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 54, in run
+    @run_agent
+               
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 147, in receive_parameter
+    input_data = self._receive_event_input(event=event, parameter_names=parameter_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 131, in _receive_event_input
+    def _receive_event_input(self, event, parameter_names:Union[str,dict]):
+
+KeyboardInterrupt

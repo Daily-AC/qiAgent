@@ -1,0 +1,4 @@
+C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py:260: RuntimeWarning: coroutine 'run' was never awaited
+  func(*args, **kwargs)
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+Exception ignored in: <coroutine object run at 0x000001CBEE0E8200>

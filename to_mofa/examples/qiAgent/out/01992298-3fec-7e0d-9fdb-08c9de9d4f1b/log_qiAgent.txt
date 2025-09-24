@@ -1,0 +1,13 @@
+2025-09-07 13:13:50,413 - asyncio - DEBUG - Using proactor: IocpProactor
+2025-09-07 13:13:59,013 - qiAgent - INFO - "qiAgent  receive  data : C:\\\\Users\\\\seven\\\\Desktop\\\\qiAgent\\\\resume\\\\resume.pdf  "
+Error occurred: Logger.log() missing 1 required positional argument: 'msg'
+Traceback (most recent call last):
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 66, in run
+    text = work(file_path)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 25, in work
+    logger.log("\u231b\ufe0f��ʼ��ȡ������Ϣ...")
+TypeError: Logger.log() missing 1 required positional argument: 'msg'
+Traceback (most recent call last):

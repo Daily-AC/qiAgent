@@ -1,0 +1,11 @@
+Error occurred: 'gbk' codec can't encode character '\u231b' in position 0: illegal multibyte sequence
+Traceback (most recent call last):
+  File "C:\Users\seven\Desktop\qiAgent\.venv\Lib\site-packages\mofa\agent_build\base\base_agent.py", line 260, in wrapper
+    func(*args, **kwargs)
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 57, in run
+    text = work(file_path)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\seven\Desktop\qiAgent\to_mofa\agent-hub\qiAgent\qiagent\main.py", line 16, in work
+    print("\u231b\ufe0f��ʼ��ȡ������Ϣ...")
+UnicodeEncodeError: 'gbk' codec can't encode character '\u231b' in position 0: illegal multibyte sequence
+Traceback (most recent call last):
