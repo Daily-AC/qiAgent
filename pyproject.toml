@@ -11,6 +11,7 @@ dependencies = [
     "fastmcp>=2.12.3",
     "markdown>=3.9",
     "mcp>=1.14.1",
+    "numpy>=2.3.4",
     "openai>=1.109.1",
     "pdfkit>=1.0.0",
     "playsound",
@@ -20,7 +21,10 @@ dependencies = [
     "pypdf2>=3.0.1",
     "python-markdown-math>=0.9",
     "reportlab>=4.4.4",
+    "requests-toolbelt>=1.0.0",
+    "spark-ai-python>=0.4.5",
     "speechrecognition>=3.14.3",
+    "websocket-client>=1.9.0",
 ]
 
 [tool.uv.sources]

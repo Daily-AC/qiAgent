@@ -112,6 +112,22 @@ def read_resume_json():
         return f"错误: 没有读取文件 '{filename}' 的权限"
     except Exception as e:
         return f"读取文件时发生错误: {e}"
+
+IS_INIT = False
+@mcp.tool
+def read_jobs_info(idx):
+    """读取output.txt文件并返回指定序列号的工作信息"""
+    global IS_INIT
+    from mcp_server.utils import JOB_INFO_DICT, init_job_info_dict
+    if not IS_INIT:
+        init_job_info_dict()
+        IS_INIT = True
+    idx = str(idx).strip()
+    if idx in JOB_INFO_DICT:
+        return JOB_INFO_DICT[idx]
+    else:
+        return f"未找到序列号 '{idx}' 对应的工作信息。请确认序列号是否正确。"
+
 def main():
     mcp.run(transport="stdio")
 
