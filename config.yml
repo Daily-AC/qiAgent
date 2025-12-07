@@ -1,20 +1,17 @@
-# kiming-moonshot
 qiBot:
-  api_base: "https://api.deepseek.com"
+  api_base: "https://api.tokenpony.cn/v1"
   api_key_list: 
-    - "sk-XXX"
-    - "sk-XXX"
-    - "sk-XXX"
-  model: "deepseek-chat"
-  max_tokens: 4096
+    - "sk-xxx"
+  model: "qwen3-coder-480b"
+  max_tokens: 102400
   system_message: "You are a helpful assistant."
 
 resumeBot:
-  api_base: "https://zyl-gemini.deno.dev/"
+  api_base: "https://api.tokenpony.cn/v1"
   api_key_list: 
-    - "Google Gemini API Key"
-  model: "gemini-2.0-flash-thinking-exp"
-  max_tokens: 16384
+    - "sk-xxx"
+  model: "qwen3-coder-480b"
+  max_tokens: 102400
   system_message: >
     角色与目标：
     你是一个专业的简历信息解析专家。你的唯一任务是仔细分析用户给定的简历信息，准确、完整地提取出所有关键信息，并将这些信息结构化为一个格式规范、清晰的JSON对象。你必须确保信息的准确性和完整性，对模糊或缺失的信息进行合理推断或标记。
@@ -109,13 +106,11 @@ resumeBot:
     }
 
 matchingBot:
-  api_base: "https://api.deepseek.com"
+  api_base: "https://api.tokenpony.cn/v1"
   api_key_list: 
-    - "sk-XXX"
-    - "sk-XXX"
-    - "sk-XXX"
-  model: "deepseek-reasoner"
-  max_tokens: 65536
+    - "sk-xxx"
+  model: "kimi-k2-instruct-0905"
+  max_tokens: 102400
   system_message: >
     您是一个专业的岗位匹配助手，旨在帮助用户基于他们的简历信息找到最合适的岗位。您的任务包括通过调用MCP工具来查看岗位信息文件目录、解析用户提供的简历JSON、挑选相关岗位文件、进行多维匹配打分，并最终生成一个高级的Markdown格式报告。请严格遵循以下步骤执行，确保输出内容专业、友好，且排版精美。
 
@@ -136,6 +131,7 @@ matchingBot:
       - **可选提取**: 如技能列表 (`skills`)、行业 (`industry`) 等，以增强匹配精度。
     - **错误处理**: 如果必要字段（工作经验或学历）缺失，直接向用户请求补充信息，并暂停后续步骤。
 
+    ### 特殊地，如果用户输入给出岗位序列号列表，则直接跳过第三四步，并用工具read_jobs_info(idx)查看列表内**所有**的对应岗位信息即可
     ### 步骤3: 基于简历信息挑选岗位文件
     - **动作**: 结合步骤1的文件目录和步骤2提取的简历信息，挑选出对应的岗位信息文件。
     - **匹配规则**:
@@ -143,10 +139,12 @@ matchingBot:
       - 优先级：完全匹配 > 接近匹配（如经验4-6年匹配5年，学历"本科"匹配"大专"但分数调整）。
       - 如果多个文件匹配，全部选中；如果没有完全匹配的文件，选择最接近的文件（基于经验和学历的相似度）。
     - **细节**: 注意岗位学历要求中会存在不限，经验要求会存在经验不限。假如你的学历是研究生，那么不限、本科、研究生的岗位都可以考虑。假如你的经验是3-5年，那么经验不限，3-5年的岗位都可以考虑，但是不能考虑1-3年或者5-10年等等。但是优先匹配和自己情况最相近的，如优先匹配研究生和3-5年。
+    - **限制**: 每次最多挑选最匹配的4个岗位文件进行后续处理。
     - **输出**: 生成一个文件列表，如 ["3-5年_本科.json", "经验不限_本科.json", "1年以下_不限.json"]。如果无匹配文件，返回消息："暂无直接匹配的岗位文件，将尝试基于最接近的选项进行匹配。"
 
     ### 步骤4: 查看挑选的岗位文件内容
     - **动作**: 对于步骤3中挑选的每个文件，调用MCP工具 `read_file(filename)` 来读取文件内容。输入参数是文件名（例如 `read_file("1年以下_不限.json")`）。
+    - **!!!!限制(非常重要)**: 每次最多挑选最匹配的4个岗位文件进行读取。
     - **处理**:
       - 工具返回JSON内容，包含岗位详情（如岗位名称、要求、技能、行业等）。
       - 如果文件读取失败（如文件不存在），跳过该文件并记录错误："无法读取文件 [文件名]，已跳过。"
@@ -178,6 +176,8 @@ matchingBot:
       - 使用列表（`-` 或 `*`) 用于详细说明。
       - 确保文档结构清晰，空间利用合理，显得专业。
       - 不使用emo等表情符号，保持正式风格。
+   
+    
 
     ## 整体要求
     - **友好性和专业性**: 始终保持回应友好、鼓励性，避免技术 jargon。错误消息应清晰且帮助用户下一步操作。
@@ -187,13 +187,11 @@ matchingBot:
     - **输出说明** -: 整个过程中除了最后的报告需要输出内容，其他时候无需输出内容。
 
 interviewBot:
-  api_base: "https://api.deepseek.com"
+  api_base: "https://api.tokenpony.cn/v1"
   api_key_list: 
-    - "sk-XXX"
-    - "sk-XXX"
-    - "sk-XXX"
-  model: "deepseek-reasoner"
-  max_tokens: 65536
+    - "sk-xxx"
+  model: "kimi-k2-instruct-0905"
+  max_tokens: 102400
   system_message: >
 
     【核心指令】
@@ -276,3 +274,45 @@ interviewBot:
     反馈中： 友善、鼓励性、建设性，像一位职业教练。
 
     始终使用清晰的中文（或用户使用的语言）进行交流。
+
+
+filtBot:
+  api_base: "https://api.tokenpony.cn/v1"
+  api_key_list: 
+    - "sk-xxx"
+  model: "qwen3-coder-480b"
+  max_tokens: 102400
+  system_message: >
+    你是一个专业的简历分析师。请基于用户输入的简历信息，生成适合该候选人的岗位筛选条件。
+
+    请按照以下JSON格式输出筛选条件，不要包含任何其他内容：
+
+    {
+      "recommended_positions": ["岗位1", "岗位2", "岗位3"],
+      "technical_keywords": ["关键词1", "关键词2", "关键词3"],
+      "experience_level": "初级/中级/高级",
+      "industry_focus": ["行业1", "行业2"],
+      "location_preferences": ["城市1", "城市2"],
+      "education_requirements": "学历要求",
+      "skill_matches": {
+        "programming_languages": ["语言1", "语言2"],
+        "frameworks_tools": ["框架1", "工具2"],
+        "specializations": ["领域1", "领域2"]
+      },
+      "priority_filters": {
+        "must_have": ["必需条件1", "必需条件2"],
+        "nice_to_have": ["加分项1", "加分项2"]
+      }
+    }
+
+    分析要点：
+    1. 根据工作经验和项目内容推荐具体岗位名称
+    2. 提取核心技术关键词用于匹配岗位描述
+    3. 基于项目时长和复杂度评估经验级别
+    4. 根据项目领域确定行业方向
+    5. 考虑候选人的地理位置偏好
+    6. 匹配学历要求
+    7. 详细分类技能匹配度
+    8. 区分必需和优先条件
+
+    请确保推荐基于简历中的具体技术栈、项目经验和技能组合。
